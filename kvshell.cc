@@ -33,12 +33,12 @@ void loopshell(){
         }
 
         if (cmdLine == "myprocess"){
-            getpid(); 
+            cout << getpid(); 
 
         }
 
         if (cmdLine == "allprocesses"){
-            system("ps");
+            cout << system("ps");
         }
 
         cout << "k$ " << cmdLine << endl;
