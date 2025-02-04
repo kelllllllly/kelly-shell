@@ -16,47 +16,62 @@ loopshell();
     return 0;
 }
 
-
-
 void loopshell(){
-    string prompt = "k$ ";
-    string cmdLine, inputRead; 
-    int status; 
+    string prompt = "k$ "; // my prompt 
+    string cmdLine, cmd, parameters;  
+
 
     while(true){
         cout << prompt;
         getline(cin, cmdLine);
 
-        if (cmdLine == "quit"){
+        // parsing command 
+        stringstream ss(cmdLine);
+        ss >> cmd; 
+
+        parameters = cmdLine.substr(cmd.length()+1); 
+        if (cmd == "quit"){
 
             cout << "quitting" << endl;
             exit(1);
         }
 
-        if (cmdLine == "myprocess"){
+        if (cmd == "myprocess"){
             cout << getpid() << endl;
 
         }
 
-        if (cmdLine == "allprocesses"){
-            system("ps");
+        if (cmd == "allprocesses"){
+            system("ps"); // executed using system 
         }
 
-        if(cmdLine == "clr"){
-            system("clear");
+        if(cmd == "clr"){
+            system("clear"); // executed using system
+        }
+        
+        if (cmd == "environ"){
+            system("env"); // executed using system
         }
 
-        if(cmdLine == "help")
+        if(cmd == "repeat")
+
+        if(cmd == "help")
             usermanual(); 
-        //cout << "k$ " << endl;
+  
+        cout << prompt << cmd; 
     }
 
      
 }
 
 void usermanual(){
-    cout << "myprocess: shows current pid" << endl;
-    cout << "allprocesses: shows all current processes running." << endl;
-    cout << "clr: clears the screen" << endl;
-    cout << "help: shows the usermanual" << endl;
+    cout << "myprocess - shows current pid" << endl;
+    cout << "allprocesses - shows all current processes running." << endl;
+    cout << "clr - clears the screen" << endl;
+    cout << "help - shows the usermanual" << endl;
+    cout << "environ - list all enviroment settings" << endl; 
+}
+
+void repeat(){
+
 }
