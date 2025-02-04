@@ -42,7 +42,7 @@ void loopshell(){
             system("ps");
         }
 
-        cout << "k$ " << cmdLine << endl;
+        cout << "k$ " << endl;
     }
 
      
