@@ -28,8 +28,9 @@ void loopshell(){
             exit(1);
         }
 
+        cout << "k$ " << cmdLine << endl;
     }
 
-    cout << "k$ " << cmdLine << endl; 
+     
 }
 
