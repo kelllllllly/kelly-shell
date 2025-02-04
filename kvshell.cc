@@ -6,15 +6,21 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 
+loopshell();
 
-string prompt = "k$ ";
+    return 0;
+}
+
+
+
+void loopshell(){
+    string prompt = "k$ ";
     string cmdLine, inputRead; 
     int status; 
 
     while(true){
         cout << prompt;
         getline(cin, cmdLine);
-
 
         if (cmdLine == "quit"){
 
@@ -25,10 +31,5 @@ string prompt = "k$ ";
     }
 
     cout << "k$ " << cmdLine << endl; 
-
-
-
-    return 0;
 }
-
 
