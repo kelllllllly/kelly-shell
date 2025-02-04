@@ -54,7 +54,7 @@ void loopshell(){
         }
 
         if(cmd == "repeat"){
-            
+
         }
 
         if(cmd == "help"){
@@ -62,7 +62,7 @@ void loopshell(){
         }
     
   
-        cout << prompt << cmd; 
+        //cout << prompt << cmd; 
     }
 
      
