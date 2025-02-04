@@ -4,6 +4,8 @@
 
 using namespace std; 
 
+void loopshell();
+
 int main(int argc, char *argv[]){
 
 loopshell();
