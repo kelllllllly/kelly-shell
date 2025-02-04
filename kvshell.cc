@@ -7,6 +7,7 @@
 using namespace std; 
 
 void loopshell();
+void usermanual();
 
 int main(int argc, char *argv[]){
 
@@ -33,8 +34,7 @@ void loopshell(){
         }
 
         if (cmdLine == "myprocess"){
-            cout << endl;
-            cout << getpid(); 
+            cout << getpid() << endl;
 
         }
 
@@ -42,9 +42,21 @@ void loopshell(){
             system("ps");
         }
 
-        cout << "k$ " << endl;
+        if(cmdLine == "clr"){
+            system("clear");
+        }
+
+        if(cmdLine == "help")
+            usermanual(); 
+        //cout << "k$ " << endl;
     }
 
      
 }
 
+void usermanual(){
+    cout << "myprocess: shows current pid" << endl;
+    cout << "allprocesses: shows all current processes running." << endl;
+    cout << "clr: clears the screen" << endl;
+    cout << "help: shows the usermanual" << endl;
+}
