@@ -27,9 +27,9 @@ void loopshell(){
 
         // parsing command 
         stringstream ss(cmdLine);
-        ss << cmdLine; 
         ss >> cmd; 
-
+        cout << cmd; 
+        
         parameters = cmdLine.substr(cmd.length()+1); 
         if (cmd == "quit"){
 
