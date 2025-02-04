@@ -4,25 +4,31 @@
 
 using namespace std; 
 
-int main(){
+int main(int argc, char *argv[]){
 
-kLoop(); 
-    return 0;
-}
 
-void kLoop(){
-     
-    string prompt = "k$ ";
+string prompt = "k$ ";
     string cmdLine, inputRead; 
     int status; 
 
     while(true){
         cout << prompt;
         getline(cin, cmdLine);
+
+
+        if (cmdLine == "quit"){
+
+            cout << "exiting";
+            exit(1);
+        }
+
     }
 
     cout << "k$ " << cmdLine << endl; 
 
 
+
+    return 0;
 }
+
 
