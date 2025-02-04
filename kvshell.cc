@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string> 
 #include <sstream> 
+#include <cstdlib> 
 
 using namespace std; 
 
@@ -30,6 +31,10 @@ void loopshell(){
             exit(1);
         }
 
+        if (cmdLine == "myprocesses"){
+            system("ps");
+        }
+        
         cout << "k$ " << cmdLine << endl;
     }
 
