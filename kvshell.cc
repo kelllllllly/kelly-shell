@@ -29,8 +29,8 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
         cout << cmd; 
-        
-        parameters = cmdLine.substr(cmd.length()+1); 
+
+        //parameters = cmdLine.substr(cmd.length()+1); 
         if (cmd == "quit"){
 
             cout << "quitting" << endl;
