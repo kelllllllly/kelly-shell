@@ -10,7 +10,14 @@ void loopshell();
 void usermanual();
 
 int main(int argc, char *argv[]){
-   string prompt = "k$ "; // my prompt 
+
+loopshell();
+
+    return 0;
+}
+
+void loopshell(){
+    string prompt = "k$ "; // my prompt 
     string cmdLine, cmd, parameters;  
 
 
@@ -20,6 +27,7 @@ int main(int argc, char *argv[]){
 
         // parsing command 
         stringstream ss(cmdLine);
+        ss << cmdLine; 
         ss >> cmd; 
 
         parameters = cmdLine.substr(cmd.length()+1); 
@@ -48,17 +56,15 @@ int main(int argc, char *argv[]){
 
         if(cmd == "repeat")
 
-        if(cmd == "help"){
-            usermanual();
-        //cout << prompt << cmd; 
+        if(cmd == "help")
+            usermanual(); 
+  
+        cout << prompt << cmd; 
+    }
 
-        }
-
-//loopshell();
-
-    return 0;
+     
 }
-}
+
 void usermanual(){
     cout << "myprocess - shows current pid" << endl;
     cout << "allprocesses - shows all current processes running." << endl;
@@ -67,3 +73,6 @@ void usermanual(){
     cout << "environ - list all enviroment settings" << endl; 
 }
 
+void repeat(){
+
+}
