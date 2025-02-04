@@ -28,7 +28,6 @@ void loopshell(){
         // parsing command 
         stringstream ss(cmdLine);
         ss >> cmd; 
-        cout << cmd; 
 
         //parameters = cmdLine.substr(cmd.length()+1); 
         if (cmd == "quit"){
@@ -54,10 +53,14 @@ void loopshell(){
             system("env"); // executed using system
         }
 
-        if(cmd == "repeat")
+        if(cmd == "repeat"){
+            
+        }
 
-        if(cmd == "help")
+        if(cmd == "help"){
             usermanual(); 
+        }
+    
   
         cout << prompt << cmd; 
     }
