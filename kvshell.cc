@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string> 
 #include <sstream> 
-#include <cstdlib> 
+#include <cstdlib>
+#include <unistd.h> 
 
 using namespace std; 
 
@@ -31,10 +32,15 @@ void loopshell(){
             exit(1);
         }
 
-        if (cmdLine == "myprocesses"){
+        if (cmdLine == "myprocess"){
+            getpid(); 
+
+        }
+
+        if (cmdLine == "allprocesses"){
             system("ps");
         }
-        
+
         cout << "k$ " << cmdLine << endl;
     }
 
