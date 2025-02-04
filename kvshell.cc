@@ -18,7 +18,7 @@ string prompt = "k$ ";
 
         if (cmdLine == "quit"){
 
-            cout << "exiting";
+            cout << "exiting" << endl;
             exit(1);
         }
 
