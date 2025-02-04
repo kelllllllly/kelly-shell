@@ -29,19 +29,18 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
 
-        //parameters = cmdLine.substr(cmd.length()+1); 
-        if (cmd == "quit"){
-
+        parameters = cmdLine.substr(cmd.length()+1);
+        
+        if (cmd.c_str() == "quit"){
             cout << "quitting" << endl;
             exit(1);
         }
 
-        if (cmd == "myprocess"){
+        if (cmd.c_str() == "myprocess"){
             cout << getpid() << endl;
-
         }
 
-        if (cmd == "allprocesses"){
+        if (cmd.c_str() == "allprocesses"){
             system("ps"); // executed using system 
         }
 
@@ -73,7 +72,8 @@ void usermanual(){
     cout << "allprocesses - shows all current processes running." << endl;
     cout << "clr - clears the screen" << endl;
     cout << "help - shows the usermanual" << endl;
-    cout << "environ - list all enviroment settings" << endl; 
+    cout << "environ - list all enviroment settings" << endl;
+    cout << "quit - exit the shell" << endl; 
 }
 
 void repeat(){
