@@ -3,6 +3,7 @@
 #include <sstream> 
 #include <cstdlib>
 #include <unistd.h> 
+#include <fstream> 
 
 using namespace std; 
 
@@ -32,8 +33,8 @@ void loopshell(){
         if (ss.peek() == ' '){
             ss >> parameters; 
         }
-        cout << cmd << endl;
-        cout << parameters << endl; 
+        // cout << cmd << endl;
+        // cout << parameters << endl; 
         
         if (cmd == "quit"){
             cout << "quitting" << endl;
@@ -57,29 +58,23 @@ void loopshell(){
         }
 
         if(cmd == "repeat"){
-
+            repeat(parameters); 
         }
-
         if(cmd == "help"){
             usermanual(); 
         }
-        
         if (cmd == "chgd"){
             if(chdir(parameters.c_str()) != 0){
                 cerr << "directory not found" << endl;
             } else{
                 chdir(parameters.c_str()); 
             }
-            system("pwd");
         }
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
         parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
-        //cout << prompt << cmd; 
-    }
-
-     
+    }     
 }
 
 void usermanual(){
@@ -93,6 +88,44 @@ void usermanual(){
     cout << "quit - exit the shell" << endl; 
 }
 
-void repeat(){
+void repeat(const string &parameters){
+    stringstream ss(parameters);
+    int x;
+    string word, fileName, stop; // word for the text that will be input, filename for the file its being redirected to, stop for implementation of ">"
+    bool redirect = false; 
 
-}
+    while (ss >> stop){
+        if(stop == ">"){
+            redirect == true; 
+            ss >> fileName;
+            break;
+        }
+            if(!word.empty()){
+                word+= " ";
+            }
+            word+=stop; 
+    }
+    if(redirect){
+        if(fileName.empty()){
+            cerr << "file not specified." << endl;
+            return;
+        }
+
+        ofstream outFile(fileName);
+        if(!outFile){
+            cerr << "can not open file: " << fileName << endl; 
+            return; 
+        }
+
+        outFile << word << endl;
+        outFile.close(); 
+        cout << "text was sent to " << fileName << endl;
+
+    } else {
+        cout << word << endl; 
+    }
+
+
+
+
+    }
