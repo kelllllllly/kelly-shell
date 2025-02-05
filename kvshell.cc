@@ -151,7 +151,7 @@ void hiMom(){
         close(pip[1]);    
     }
     else { // parent process
-        close(pip[1]);
+        close(pip[0]);
         read(pip[0], instring, sizeof(instring));
         cout << "Parent: hey kid, got your message! " << instring << endl; 
         close(pip[0]);
