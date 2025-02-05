@@ -21,7 +21,7 @@ ofstream history;
 void loopShell(); // loops the "k$" prompt & handles CL user input 
 void userManual(); // shows all commands in the shell 
 void repeat(const string &parameters); // directs user input to a file or echoes it to the command line 
-void hiMom(); // forks a child process & communicates with parent
+// void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
 void print();
 
@@ -95,9 +95,9 @@ void loopShell(){
             system(("ls -l" + parameters).c_str());
         }
 
-        else if(cmd == "himom"){
-            hiMom(); 
-        }
+        // else if(cmd == "himom"){
+        //     hiMom(); 
+        // }
 
         parameters.clear(); // so it clears every loop, prevents dir from using the previous parased argument 
 
@@ -152,38 +152,38 @@ void repeat(const string &parameters){
         cout << word << endl; 
     }
     }
-void hiMom(){
+// void hiMom(){
 
-    int pip[2];
-    char instring[20];
-    const char *msg = "Hi mom!";
+//     int pip[2];
+//     char instring[20];
+//     const char *msg = "Hi mom!";
 
-    if (pipe(pip) == -1){
-        cout << "pipe failed" << endl;
-        return; 
-    }
-    int pid = fork(); // creates child process 
+//     if (pipe(pip) == -1){
+//         cout << "pipe failed" << endl;
+//         return; 
+//     }
+//     int pid = fork(); // creates child process 
 
-    if (pid < 0){
-        cout << "fork failed" << endl;
-        return; 
-    }
+//     if (pid < 0){
+//         cout << "fork failed" << endl;
+//         return; 
+//     }
 
-    // child process
-    if(pid == 0){
-        close(pip[0]); // close read
-        cout << "Child: sends message to parent" << endl; 
-        write(pip[1], msg, strlen(msg) + 1);
-        close(pip[1]);    
-    }
-    else { // parent process
-        close(pip[1]);
-        read(pip[0], instring, sizeof(instring));
-        cout << "Parent: hey kid, got your message! " << instring << endl; 
-        close(pip[0]);
+//     // child process
+//     if(pid == 0){
+//         close(pip[0]); // close read
+//         cout << "Child: sends message to parent" << endl; 
+//         write(pip[1], msg, strlen(msg) + 1);
+//         close(pip[1]);    
+//     }
+//     else { // parent process
+//         close(pip[1]);
+//         read(pip[0], instring, sizeof(instring));
+//         cout << "Parent: hey kid, got your message! " << instring << endl; 
+//         close(pip[0]);
 
-    }
-} 
+//     }
+// } 
 void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
     exit(0);
