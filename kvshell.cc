@@ -18,8 +18,6 @@ void hiMom();
 int main(int argc, char *argv[]){
 
     loopShell();
-
- 
     return 0;
 }
 void loopShell(){
@@ -40,7 +38,8 @@ void loopShell(){
         // cout << pwd << endl; 
         if (cmd == "quit"){
             cout << "quitting" << endl;
-            exit(1);
+            return; 
+
         }
 
         if (cmd == "myprocess"){
@@ -79,6 +78,7 @@ void loopShell(){
         if (cmd == "himom"){
             hiMom(); 
         }
+
         parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
 
     }     
@@ -136,28 +136,28 @@ void hiMom(){
 
     if (pipe(pip) == -1){
         cout << "pipe failed" << endl;
-        exit(1); 
+        return; 
     }
     
     int pid = fork(); // creates child process 
 
     if (pid < 0){
         cout << "fork failed" << endl;
-        exit(2);
+        return; 
     }
 
     // child process
     if(pid == 0){
-        close(pip[1]); // close read
+        close(pip[0]); // close read
         cout << "Child: sends message to parent" << endl; 
-        write(pip[0], msg, strlen(msg) + 1);
-        close(pip[0]);    
+        write(pip[1], msg, strlen(msg) + 1);
+        close(pip[1]);    
     }
     else { // parent process
-        close(pip[0]);
-        read(pip[1], instring, sizeof(instring));
-        cout << "Parent: hey kid, got your message! " << instring << endl; 
         close(pip[1]);
+        read(pip[0], instring, sizeof(instring));
+        cout << "Parent: hey kid, got your message! " << instring << endl; 
+        close(pip[0]);
 
     }
 } 
