@@ -16,11 +16,14 @@
 
 using namespace std; 
 
+ofstream history;
+
 void loopShell(); // loops the "k$" prompt & handles CL user input 
 void userManual(); // shows all commands in the shell 
 void repeat(const string &parameters); // directs user input to a file or echoes it to the command line 
 void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
+void print();
 
 int main(){
     signal(SIGINT, signalHandler); // handles crtl + c, also prints history if needed. 
@@ -28,6 +31,11 @@ int main(){
     return 0;
 }
 void loopShell(){
+    history.open("history.txt", ios::app);
+    if (!history) {
+        cerr << "error opening file" << endl;
+        return;
+    }
     string prompt = "k$ "; // my prompt 
     string cmdLine, cmd, parameters;  
 
@@ -42,8 +50,15 @@ void loopShell(){
         ss >> cmd; 
 
         getline(ss >> ws, parameters);
+        
+        
+        if (!cmd.empty()) {
+            history << cmdLine << endl;  // saves a command to history
+
         // used to quit the shell 
         if (cmd == "quit"){
+            print();
+            history.close();
             cout << "quitting" << endl;
             break;
         }
@@ -88,6 +103,8 @@ void loopShell(){
 
     }     
 }
+}
+
 void userManual(){
     cout << "myprocess - shows current pid" << endl;
     cout << "allprocesses - shows all current processes running." << endl;
@@ -171,3 +188,13 @@ void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
     exit(0);
 }   
+
+void print(){
+    ifstream infile("history.txt");
+    string line;
+    cout << "command history: " << endl;
+    while(getline(infile, line)){
+        cout << line << endl;
+    }
+    infile.close();
+}
