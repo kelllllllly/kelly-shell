@@ -71,7 +71,7 @@ void loopshell(){
         }
         
         if (cmd == "chgd"){
-            chdir(parameters.c_str());
+            chdir("..");
             system("pwd");
         }
         system("pwd");
