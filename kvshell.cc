@@ -74,7 +74,7 @@ void loopshell(){
             chdir(cmd.c_str());
             system("pwd");
         }
-  
+        system("pwd");
         //cout << prompt << cmd; 
     }
 
