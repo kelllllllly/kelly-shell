@@ -70,11 +70,12 @@ void loopshell(){
             } else{
                 chdir(parameters.c_str()); 
             }
+            system("pwd");
         }
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
-        parameters = "";
+        parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
         //cout << prompt << cmd; 
     }
 
