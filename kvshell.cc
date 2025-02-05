@@ -47,7 +47,7 @@ void loopShell(){
         getline(cin, cmdLine);
         if (cmdLine.empty()) continue;  // skips empty lines
         history << cmdLine << endl;
-        
+
         // parsing command 
         stringstream ss(cmdLine);
         ss >> cmd; 
@@ -56,7 +56,7 @@ void loopShell(){
         // used to quit the shell 
         if (cmd == "quit"){
             cout << "quitting" << endl;
-            history.close(); 
+           // history.close(); 
             exit(0);
         }
 
@@ -87,9 +87,7 @@ void loopShell(){
                 cerr << "directory not found" << endl;
             }
         }
-        // if (cmd == "pwd"){
-        //     system("pwd"); // print working directory for user to see current directory
-        // }
+
         else if(cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
