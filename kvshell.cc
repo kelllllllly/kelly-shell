@@ -38,18 +38,19 @@ void loopshell(){
         
         parameters = cmdLine.substr(cmd.length());
         
+        cout << cmd << endl;
         cout << parameters << endl; 
         
-        if (cmd.c_str() == "quit"){
+        if (cmd == "quit"){
             cout << "quitting" << endl;
             exit(1);
         }
 
-        if (cmd.c_str() == "myprocess"){
+        if (cmd == "myprocess"){
             cout << getpid() << endl;
         }
 
-        if (cmd.c_str() == "allprocesses"){
+        if (cmd == "allprocesses"){
             system("ps"); // executed using system 
         }
 
