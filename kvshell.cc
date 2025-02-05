@@ -29,8 +29,12 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
 
-        parameters = cmdLine.substr(cmd.length());
-        
+        //parameters = cmdLine.substr(cmd.length());
+        // check parameters
+
+        if (ss.peek() == ' '){
+            ss >> parameters; 
+        }
         cout << cmd << endl;
         cout << parameters << endl; 
         
@@ -64,7 +68,12 @@ void loopshell(){
         }
         
         if (cmd == "chgd"){
-            chdir(parameters.c_str());
+            if(chdir(parameters.c_str()) != 0){
+                cerr << "directory not found" << endl;
+            }else{
+                chdir(parameters.c_str()); 
+            }
+
             system("pwd");
         }
         system("pwd");
