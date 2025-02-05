@@ -90,7 +90,6 @@ void usermanual(){
 
 void repeat(const string &parameters){
     stringstream ss(parameters);
-    int x;
     string word, fileName, stop; // word for the text that will be input, filename for the file its being redirected to, stop for implementation of ">"
     bool redirect = false; 
 
@@ -101,11 +100,9 @@ void repeat(const string &parameters){
             break;
         }
             if(!word.empty()){
-                word+=stop;
-            } else{
-                word+= " " + stop; 
-            }
-        
+                word += " ";
+    }
+    word += stop; 
     }
     if(redirect){
         if(fileName.empty()){
