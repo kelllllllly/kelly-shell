@@ -36,7 +36,7 @@ void loopshell(){
         // }
         
         
-        parameters = cmdLine.substr(cmd.length());
+        parameters = cmdLine.substr(cmd.length()+1);
         
         cout << cmd << endl;
         cout << parameters << endl; 
@@ -71,7 +71,7 @@ void loopshell(){
         }
         
         if (cmd == "chgd"){
-            chdir("..");
+            chdir(parameters.c_str());
             system("pwd");
         }
         system("pwd");
