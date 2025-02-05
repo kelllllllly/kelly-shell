@@ -73,7 +73,7 @@ void loopshell(){
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
-        parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
+        //parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
     }     
 }
 
@@ -116,7 +116,6 @@ void repeat(const string &parameters){
             cerr << "can not open file: " << fileName << endl; 
             return; 
         }
-
         outFile << word << endl;
         outFile.close(); 
         cout << "text was sent to " << fileName << endl;
@@ -124,8 +123,4 @@ void repeat(const string &parameters){
     } else {
         cout << word << endl; 
     }
-
-
-
-
     }
