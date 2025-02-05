@@ -137,7 +137,7 @@ void hiMom(){
         exit(1); 
     }
     
-    int pid = fork(); // creates child process 
+    pid_t pid = fork(); // creates child process 
 
     if (pid < 0){
         cout << "fork failed" << endl;
