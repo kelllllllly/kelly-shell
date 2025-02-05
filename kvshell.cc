@@ -29,9 +29,6 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
 
-        //parameters = cmdLine.substr(cmd.length());
-        // check parameters
-
         if (ss.peek() == ' '){
             ss >> parameters; 
         }
@@ -70,13 +67,14 @@ void loopshell(){
         if (cmd == "chgd"){
             if(chdir(parameters.c_str()) != 0){
                 cerr << "directory not found" << endl;
-            }else{
+            } else{
                 chdir(parameters.c_str()); 
             }
-
-            system("pwd");
         }
-        system("pwd");
+
+        if (cmd == "dir"){
+            system(("ls -l" + parameters).c_str());
+        }
         //cout << prompt << cmd; 
     }
 
@@ -89,6 +87,7 @@ void usermanual(){
     cout << "clr - clears the screen" << endl;
     cout << "help - shows the usermanual" << endl;
     cout << "environ - list all enviroment settings" << endl;
+    cout << "chgd <directory> will change the current working directory" << endl;
     cout << "quit - exit the shell" << endl; 
 }
 
