@@ -39,7 +39,7 @@ void loopShell(){
         // used to quit the shell 
         if (cmd == "quit"){
             cout << "quitting" << endl;
-            return; 
+            exit(0);
         }
 
         if (cmd == "myprocess"){
@@ -167,4 +167,6 @@ void hiMom(){
 } 
 void signalHandler(int signum){
     cout << "recieved " << signum << " exiting shell" << endl; 
-}
+    exit(0);
+}   
+
