@@ -1,22 +1,26 @@
 #include <iostream>
 #include <string> 
-#include <sstream> 
-#include <cstdlib>
-#include <unistd.h> 
+#include <sstream>
 #include <fstream> 
+#include <cstdlib>
+#include <unistd.h> // pipes don't run in windows; but luckily run through hopper! 
+#include <stdlib.h> 
+#include <stdio.h>
 
 using namespace std; 
 
-void loopshell();
-void usermanual();
-void repeat(const string &parameters); 
+void loopShell();
+void userManual();
+void repeat(const string &parameters);
+void hiMom(); 
 
 int main(int argc, char *argv[]){
-loopshell();
+loopShell();
 
+ 
     return 0;
 }
-void loopshell(){
+void loopShell(){
     string prompt = "k$ "; // my prompt 
     string cmdLine, cmd, parameters;  
 
@@ -29,9 +33,9 @@ void loopshell(){
         ss >> cmd; 
 
         getline(ss >> ws, parameters);
-
         // cout << cmd << endl;
-        // cout << parameters << endl; 
+        // cout << parameters << endl;
+        // cout << pwd << endl; 
         if (cmd == "quit"){
             cout << "quitting" << endl;
             exit(1);
@@ -57,7 +61,7 @@ void loopshell(){
             repeat(parameters); 
         }
         if(cmd == "help"){
-            usermanual(); 
+            userManual(); 
         }
         if (cmd == "chgd"){
             if(chdir(parameters.c_str()) != 0){
@@ -69,10 +73,15 @@ void loopshell(){
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
+
+        if (cmd == "himom"){
+            hiMom(); 
+        }
         parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
+
     }     
 }
-void usermanual(){
+void userManual(){
     cout << "myprocess - shows current pid" << endl;
     cout << "allprocesses - shows all current processes running." << endl;
     cout << "clr - clears the screen" << endl;
@@ -117,3 +126,35 @@ void repeat(const string &parameters){
         cout << word << endl; 
     }
     }
+void hiMom(){
+    int pip[2];
+    char instring[20];
+    const char* msg = "Hi mom!";
+
+    if (pipe(pip) == -1){
+        cout << "pipe failed" << endl;
+        exit(1); 
+    }
+    
+    int pid = fork(); // creates child process 
+
+    if (pid < 0){
+        cout << "fork failed" << endl;
+        exit(2);
+    }
+
+    // child process
+    if(pid == 0){
+        close(pip[0]); // close read
+        cout << "Child: sends message to parent"; 
+        write(pip[1], msg, strlen(msg) + 1);
+        close(pip[1]);    
+    }
+    else { // parent process
+        close(pip[1]);
+        read(pip[0], instring, sizeof(instring));
+        cout << "Parent: hey kid, got your message! " << instring << endl; 
+        close(pip[0]);
+
+    }
+} 
