@@ -72,6 +72,7 @@ void loopshell(){
         
         if (cmd == "chgd" && parameters == ""){
             system("cd");
+            system("pwd");
         }
   
         //cout << prompt << cmd; 
