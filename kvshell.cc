@@ -16,24 +16,13 @@
 
 using namespace std; 
 
-ofstream history; // history file 
-
 void loopShell(); // loops the "k$" prompt & handles CL user input 
 void userManual(); // shows all commands in the shell 
 void repeat(const string &parameters); // directs user input to a file or echoes it to the command line 
 void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
-void print(); // prints a history file once shell is exited. 
 
 int main(){
-
-    // opens history file 
-    history.open("history.txt", ios::app);
-    if(!history){
-        cerr << "cannot open history file." << endl;
-        return 1;
-    }
-
     signal(SIGINT, signalHandler); // handles crtl + c, also prints history if needed. 
     loopShell(); // starts the shell & loops
     return 0;
@@ -44,10 +33,10 @@ void loopShell(){
 
     while(true){
         cout << prompt;
-        getline(cin, cmdLine);
-        if (cmdLine.empty()) continue;  // skips empty lines
-        history << cmdLine << endl;
-
+    if (!getline(cin, cmdLine)) {  // detects eof or an input error
+        cout << endl << "exiting shell due to error." << endl;
+        break;
+    }
         // parsing command 
         stringstream ss(cmdLine);
         ss >> cmd; 
@@ -56,8 +45,7 @@ void loopShell(){
         // used to quit the shell 
         if (cmd == "quit"){
             cout << "quitting" << endl;
-           // history.close(); 
-            exit(0);
+            break;
         }
 
         else if(cmd == "myprocess"){
@@ -181,22 +169,5 @@ void hiMom(){
 } 
 void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
-    history.close();
-    print(); 
-    _exit(0);
+    exit(0);
 }   
-
-void print(){
-    ifstream infile("history.txt");
-    if(!infile){
-        cerr << "cannot open history file" << endl;
-        return;
-    }
-
-    string line; 
-    cout << "command history" << endl;
-    while(getline(infile, line)){
-        cout << line << endl;
-    }
-    infile.close();
-}
