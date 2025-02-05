@@ -186,12 +186,18 @@ void hiMom(){
 } 
 void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
+    print(); 
     exit(0);
 }   
 
 void print(){
     ifstream infile("history.txt");
     string line;
+    if (!infile){
+        cerr << "error reading history.txt" << endl; 
+        return; 
+    }
+
     cout << "command history: " << endl;
     while(getline(infile, line)){
         cout << line << endl;
