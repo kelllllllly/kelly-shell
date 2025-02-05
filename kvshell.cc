@@ -185,11 +185,10 @@ void hiMom(){
 void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
     print(); 
-    exit(0);
+    _exit(0);
 }   
 
 void print(){
-    history.close();
     ifstream infile("history.txt");
     if(!infile){
         cerr << "cannot open history file" << endl;
