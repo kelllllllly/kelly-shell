@@ -129,7 +129,7 @@ void repeat(const string &parameters){
     }
     }
 void hiMom(){
-    cout << "test";
+
     int pip[2];
     char instring[20];
     const char* msg = "Hi mom!";
@@ -149,7 +149,7 @@ void hiMom(){
     // child process
     if(pid == 0){
         close(pip[1]); // close read
-        cout << "Child: sends message to parent"; 
+        cout << "Child: sends message to parent" << endl; 
         write(pip[0], msg, strlen(msg) + 1);
         close(pip[0]);    
     }
