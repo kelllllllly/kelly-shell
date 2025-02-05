@@ -45,9 +45,9 @@ void loopShell(){
     while(true){
         cout << prompt;
         getline(cin, cmdLine);
-        if(!cmdLine.empty()){
-            history << cmdLine << endl;
-        }
+        if (cmdLine.empty()) continue;  // skips empty lines
+        history << cmdLine << endl;
+        
         // parsing command 
         stringstream ss(cmdLine);
         ss >> cmd; 
@@ -98,7 +98,7 @@ void loopShell(){
             hiMom(); 
         }
 
-        parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
+        parameters.clear(); // so it clears every loop, prevents dir from using the previous parased argument 
 
     }     
 }
