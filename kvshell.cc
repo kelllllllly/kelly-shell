@@ -1,9 +1,14 @@
+// Kelly Veintimilla
+// CSCI 411 LAB 2 SIMPLE SHELL 
+// This program replicates a simple Linux CLI with a variety of commands. simply run ./compile.sh and type help to get started. 
+// This program is seperated into functions; with the main function being loopShell, which is run in main. 
+
 #include <iostream>
 #include <string> 
 #include <sstream>
 #include <fstream> 
 #include <cstdlib>
-#include <unistd.h> // pipes don't run in windows; but luckily run through hopper! 
+#include <unistd.h> // pipes don't run in windows; but luckily run through hopper (linux CLI)! 
 #include <stdlib.h> 
 #include <stdio.h>
 #include <cstring> 
@@ -11,16 +16,26 @@
 
 using namespace std; 
 
-void loopShell();
-void userManual();
-void repeat(const string &parameters);
-void hiMom();
+ofstream history; // history file 
+
+void loopShell(); // loops the "k$" prompt & handles CL user input 
+void userManual(); // shows all commands in the shell 
+void repeat(const string &parameters); // directs user input to a file or echoes it to the command line 
+void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
+void print(); // prints a history file once shell is exited. 
 
 int main(int argc, char *argv[]){
-    signal(SIGINT, signalHandler);
-    loopShell();
 
+    // opens history file 
+    history.open("history.txt", ios::app);
+    if(!history){
+        cerr << "cannot open history file." << endl;
+        return 1;
+    }
+
+    signal(SIGINT, signalHandler); // handles crtl + c, also prints history if needed. 
+    loopShell(); // starts the shell & loops
     return 0;
 }
 void loopShell(){
@@ -166,7 +181,23 @@ void hiMom(){
     }
 } 
 void signalHandler(int signum){
-    cout << "recieved " << signum << " exiting shell" << endl; 
+    cout << "recieved " << signum << " exiting shell" << endl;
+    print(); 
     exit(0);
 }   
 
+void print(){
+    history.close();
+    ifstream infile("history.txt");
+    if(infile){
+        cerr << "cannot open history file" << endl;
+        return;
+    }
+
+    string line; 
+    cout << "command history" << endl;
+    while(getline(infile, line)){
+        cout << line << endl;
+    }
+    infile.close();
+}
