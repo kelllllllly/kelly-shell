@@ -12,16 +12,13 @@ void usermanual();
 void repeat(const string &parameters); 
 
 int main(int argc, char *argv[]){
-
 loopshell();
 
     return 0;
 }
-
 void loopshell(){
     string prompt = "k$ "; // my prompt 
     string cmdLine, cmd, parameters;  
-
 
     while(true){
         cout << prompt;
@@ -31,9 +28,8 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
 
-        if (ss.peek() == ' '){
-            ss >> parameters; 
-        }
+        getline(ss >> ws, parameters);
+
         // cout << cmd << endl;
         // cout << parameters << endl; 
         if (cmd == "quit"){
@@ -76,7 +72,6 @@ void loopshell(){
         //parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
     }     
 }
-
 void usermanual(){
     cout << "myprocess - shows current pid" << endl;
     cout << "allprocesses - shows all current processes running." << endl;
@@ -87,7 +82,6 @@ void usermanual(){
     cout << "dir <directory> will list the contets of the directory" << endl; 
     cout << "quit - exit the shell" << endl; 
 }
-
 void repeat(const string &parameters){
     stringstream ss(parameters);
     string word, fileName, stop; // word for the text that will be input, filename for the file its being redirected to, stop for implementation of ">"
@@ -118,7 +112,6 @@ void repeat(const string &parameters){
         outFile << word << endl;
         outFile.close(); 
         cout << "text was sent to " << fileName << endl;
-
     } else {
         cout << word << endl; 
     }
