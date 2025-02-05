@@ -96,14 +96,16 @@ void repeat(const string &parameters){
 
     while (ss >> stop){
         if(stop == ">"){
-            redirect == true; 
+            redirect = true; 
             ss >> fileName;
             break;
         }
             if(!word.empty()){
-                word+= " ";
+                word+=stop;
+            } else{
+                word+= " " + stop; 
             }
-            word+=stop; 
+        
     }
     if(redirect){
         if(fileName.empty()){
