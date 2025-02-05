@@ -1,7 +1,3 @@
-// Kelly Veintimilla
-// CSCI 411 LAB 2 SIMPLE SHELL 
-// This program replicates a simple Linux CLI with a variety of commands. simply run ./compile.sh and type help to get started. 
-// This program is seperated into functions; with the main function being loopShell, which is run in main. 
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -23,10 +19,10 @@ void signalHandler(int signum);
 int main() {
     signal(SIGINT, signalHandler);  // handles crtl + c, also prints history if needed. 
 
-    string prompt = "k$ "; // my prompt
+    string prompt = "k$ "; // My prompt
     string cmdLine, cmd, parameters;
     
-    ofstream historyOut(historyFile, ios::app); // open history file in append mode
+    ofstream historyOut(historyFile, ios::app); // Open history file in append mode
     if (!historyOut.is_open()) {
         cerr << "cannot open history file." << endl;
         return 1;
@@ -34,9 +30,9 @@ int main() {
     // loops the shell & handles user input & printing the command history once the loop is finished. 
     while (true) {
         cout << prompt;
-        // Read the entire input line from the user
+        // read the entire input line from the user
         if (!getline(cin, cmdLine)) {
-            break;  // exits on eof or an input error 
+            break;  // Exit on EOF or input error
         }
 
         if (cmdLine.empty()) {
@@ -48,7 +44,7 @@ int main() {
         stringstream ss(cmdLine);
         ss >> cmd;
 
-        if (cmd == "quit") { // used to quit the shell 
+        if (cmd == "quit") { // used to quit the shell
             cout << "quitting" << endl;
             break;
         }
@@ -58,22 +54,22 @@ int main() {
         if (cmd == "myprocess") { // if cmd = myprocess, getpid() prints
             cout << getpid() << endl;
         }
-        else if (cmd == "allprocesses") { // if cmd = allprocesses, then "ps" is executed by system 
+        else if (cmd == "allprocesses") { // if cmd = allprocesses, then "ps"
             system("ps"); // executed using system
         }
-        else if (cmd == "clr") { // clears screen 
+        else if (cmd == "clr") { // clears screen
             system("clear"); // executed using system 
         }
-        else if (cmd == "environ") { // shows all enviroment variables if user types environ 
-            system("env"); // executed using system 
+        else if (cmd == "environ") {
+            system("env");
         }
         else if (cmd == "chgd") {
             if (chdir(parameters.c_str()) != 0) {
                 cerr << "directory not found" << endl;
             }
         }
-        else if (cmd == "dir") {
-            system(("ls -l " + parameters).c_str()); // executed using system 
+        else if (cmd == "dir") { // executed using system 
+            system(("ls -l " + parameters).c_str());
         }
 
         else if (cmd == "help"){ // executes userManual function, which shows all available commands 
@@ -87,6 +83,8 @@ int main() {
         }
 
         parameters.clear(); // so it clears every loop, prevents dir from using the previous parased argument 
+
+    }
 
     // displays history when exiting loop
     historyOut.close();
@@ -102,9 +100,8 @@ int main() {
 
     return 0;
 }
-}
 
-void signalHandler(int signum) { // handles when a user wants to exit the shell using crtl + c, also prints out command history in the event 
+void signalHandler(int signum) {// handles when a user wants to exit the shell using crtl + c, also prints out command history in the event 
     ifstream history(historyFile);
     cout << "command history" << endl;
     string line;
@@ -165,7 +162,7 @@ void repeat(const string &parameters){ // repeats a string or redirects to a fil
     }
     }
 
-    void hiMom(){
+void hiMom(){
 
     int pip[2];
     char instring[128];
