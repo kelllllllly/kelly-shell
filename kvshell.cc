@@ -78,8 +78,9 @@ void usermanual(){
     cout << "clr - clears the screen" << endl;
     cout << "help - shows the usermanual" << endl;
     cout << "environ - list all enviroment settings" << endl;
-    cout << "chgd <directory> will change the current working directory" << endl;
-    cout << "dir <directory> will list the contets of the directory" << endl; 
+    cout << "chgd <directory> - will change the current working directory" << endl;
+    cout << "dir <directory> - will list the contets of the directory" << endl; 
+    cout << "repeat abc > abc.txt- sends text to a specified file, or echos words" << endl; 
     cout << "quit - exit the shell" << endl; 
 }
 void repeat(const string &parameters){
