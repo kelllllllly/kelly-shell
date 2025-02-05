@@ -71,10 +71,10 @@ void loopshell(){
                 chdir(parameters.c_str()); 
             }
         }
-
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
+        parameters = "";
         //cout << prompt << cmd; 
     }
 
@@ -88,6 +88,7 @@ void usermanual(){
     cout << "help - shows the usermanual" << endl;
     cout << "environ - list all enviroment settings" << endl;
     cout << "chgd <directory> will change the current working directory" << endl;
+    cout << "dir <directory> will list the contets of the directory" << endl; 
     cout << "quit - exit the shell" << endl; 
 }
 
