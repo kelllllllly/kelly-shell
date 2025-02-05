@@ -9,6 +9,7 @@ using namespace std;
 
 void loopshell();
 void usermanual();
+void repeat(); 
 
 int main(int argc, char *argv[]){
 
