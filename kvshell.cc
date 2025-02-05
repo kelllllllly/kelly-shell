@@ -69,7 +69,7 @@ void loopshell(){
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
-        //parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
+        parameters = ""; // so it clears every loop, prevents dir from using the previous parased argument 
     }     
 }
 void usermanual(){
