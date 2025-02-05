@@ -146,16 +146,16 @@ void hiMom(){
 
     // child process
     if(pid == 0){
-        close(pip[0]); // close read
+        close(pip[1]); // close read
         cout << "Child: sends message to parent"; 
-        write(pip[1], msg, strlen(msg) + 1);
-        close(pip[1]);    
+        write(pip[0], msg, strlen(msg) + 1);
+        close(pip[0]);    
     }
     else { // parent process
         close(pip[0]);
-        read(pip[0], instring, sizeof(instring));
+        read(pip[1], instring, sizeof(instring));
         cout << "Parent: hey kid, got your message! " << instring << endl; 
-        close(pip[0]);
+        close(pip[1]);
 
     }
 } 
