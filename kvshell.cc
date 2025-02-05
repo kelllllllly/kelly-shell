@@ -7,17 +7,20 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include <cstring> 
+#include <csignal> 
 
 using namespace std; 
 
 void loopShell();
 void userManual();
 void repeat(const string &parameters);
-void hiMom(); 
+void hiMom();
+void signalHandler(int signum); 
 
 int main(int argc, char *argv[]){
-
+    signal(SIGINT, signalHandler);
     loopShell();
+
     return 0;
 }
 void loopShell(){
@@ -33,13 +36,10 @@ void loopShell(){
         ss >> cmd; 
 
         getline(ss >> ws, parameters);
-        // cout << cmd << endl;
-        // cout << parameters << endl;
-        // cout << pwd << endl; 
+        // used to quit the shell 
         if (cmd == "quit"){
             cout << "quitting" << endl;
             return; 
-
         }
 
         if (cmd == "myprocess"){
@@ -71,6 +71,9 @@ void loopShell(){
                 chdir(parameters.c_str()); 
             }
         }
+        if (cmd == "pwd"){
+            system("pwd"); // print working directory for user to see current directory
+        }
         if (cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
@@ -90,8 +93,10 @@ void userManual(){
     cout << "help - shows the usermanual" << endl;
     cout << "environ - list all enviroment settings" << endl;
     cout << "chgd <directory> - will change the current working directory" << endl;
-    cout << "dir <directory> - will list the contets of the directory" << endl; 
-    cout << "repeat abc > abc.txt- sends text to a specified file, or echos words" << endl; 
+    cout << "dir <directory> - will list the contets of the directory" << endl;
+    cout << "pwd - prints working directory" << endl; 
+    cout << "repeat abc > abc.txt - sends text to a specified file, or echos words" << endl;
+    cout << "himom - creates a child process using a fork. Where child and parent communicate." << endl; 
     cout << "quit - exit the shell" << endl; 
 }
 void repeat(const string &parameters){
@@ -138,7 +143,6 @@ void hiMom(){
         cout << "pipe failed" << endl;
         return; 
     }
-    
     int pid = fork(); // creates child process 
 
     if (pid < 0){
@@ -161,3 +165,6 @@ void hiMom(){
 
     }
 } 
+void signalHandler(int signum){
+    cout << "recieved " << signum << " exiting shell" << endl; 
+}
