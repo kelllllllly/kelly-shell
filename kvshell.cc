@@ -127,6 +127,7 @@ void repeat(const string &parameters){
     }
     }
 void hiMom(){
+    cout << "test";
     int pip[2];
     char instring[20];
     const char* msg = "Hi mom!";
