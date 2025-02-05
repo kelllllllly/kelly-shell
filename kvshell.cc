@@ -6,6 +6,7 @@
 #include <unistd.h> // pipes don't run in windows; but luckily run through hopper! 
 #include <stdlib.h> 
 #include <stdio.h>
+#include <cstring> 
 
 using namespace std; 
 
@@ -15,7 +16,8 @@ void repeat(const string &parameters);
 void hiMom(); 
 
 int main(int argc, char *argv[]){
-loopShell();
+
+    loopShell();
 
  
     return 0;
