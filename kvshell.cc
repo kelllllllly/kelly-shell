@@ -70,8 +70,8 @@ void loopshell(){
             usermanual(); 
         }
         
-        if (cmd == "chgd" && parameters == ""){
-            system("cd");
+        if (cmd == "chgd"){
+            chdir(parameters.c_str());
             system("pwd");
         }
   
