@@ -9,7 +9,7 @@ using namespace std;
 
 void loopshell();
 void usermanual();
-void repeat(); 
+void repeat(const string &parameters); 
 
 int main(int argc, char *argv[]){
 
@@ -36,7 +36,6 @@ void loopshell(){
         }
         // cout << cmd << endl;
         // cout << parameters << endl; 
-        
         if (cmd == "quit"){
             cout << "quitting" << endl;
             exit(1);
