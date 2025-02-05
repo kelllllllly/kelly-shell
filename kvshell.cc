@@ -29,14 +29,7 @@ void loopshell(){
         stringstream ss(cmdLine);
         ss >> cmd; 
 
-        // if (cmd.length() < cmdLine.length()) {
-        //     parameters = cmdLine.substr(cmd.length() + 1);
-        // } else {
-        //     parameters = ""; 
-        // }
-        
-        
-        parameters = cmdLine.substr(cmd.length()+1);
+        parameters = cmdLine.substr(cmd.length());
         
         cout << cmd << endl;
         cout << parameters << endl; 
