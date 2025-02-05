@@ -16,23 +16,23 @@
 
 using namespace std; 
 
-// ofstream history; // history file 
+ofstream history; // history file 
 
 void loopShell(); // loops the "k$" prompt & handles CL user input 
 void userManual(); // shows all commands in the shell 
 void repeat(const string &parameters); // directs user input to a file or echoes it to the command line 
 void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
-// void print(); // prints a history file once shell is exited. 
+void print(); // prints a history file once shell is exited. 
 
 int main(){
 
-    // // opens history file 
-    // history.open("history.txt", ios::app);
-    // if(!history){
-    //     cerr << "cannot open history file." << endl;
-    //     return 1;
-    // }
+    // opens history file 
+    history.open("history.txt", ios::app);
+    if(!history){
+        cerr << "cannot open history file." << endl;
+        return 1;
+    }
 
     signal(SIGINT, signalHandler); // handles crtl + c, also prints history if needed. 
     loopShell(); // starts the shell & loops
@@ -56,46 +56,45 @@ void loopShell(){
         // used to quit the shell 
         if (cmd == "quit"){
             cout << "quitting" << endl;
+            history.close(); 
             exit(0);
         }
 
-        if (cmd == "myprocess"){
+        else if(cmd == "myprocess"){
             cout << getpid() << endl;
         }
 
-        if (cmd == "allprocesses"){
+        else if(cmd == "allprocesses"){
             system("ps"); // executed using system 
         }
 
-        if(cmd == "clr"){
+        else if(cmd == "clr"){
             system("clear"); // executed using system
         }
         
-        if (cmd == "environ"){
+        else if(cmd == "environ"){
             system("env"); // executed using system
         }
 
-        if(cmd == "repeat"){
+        else if(cmd == "repeat"){
             repeat(parameters); 
         }
-        if(cmd == "help"){
+        else if(cmd == "help"){
             userManual(); 
         }
-        if (cmd == "chgd"){
+        else if(cmd == "chgd"){
             if(chdir(parameters.c_str()) != 0){
                 cerr << "directory not found" << endl;
-            } else{
-                chdir(parameters.c_str()); 
             }
         }
-        if (cmd == "pwd"){
-            system("pwd"); // print working directory for user to see current directory
-        }
-        if (cmd == "dir"){
+        // if (cmd == "pwd"){
+        //     system("pwd"); // print working directory for user to see current directory
+        // }
+        else if(cmd == "dir"){
             system(("ls -l" + parameters).c_str());
         }
 
-        if (cmd == "himom"){
+        else if(cmd == "himom"){
             hiMom(); 
         }
 
@@ -111,7 +110,7 @@ void userManual(){
     cout << "environ - list all enviroment settings" << endl;
     cout << "chgd <directory> - will change the current working directory" << endl;
     cout << "dir <directory> - will list the contets of the directory" << endl;
-    cout << "pwd - prints working directory" << endl; 
+    // cout << "pwd - prints working directory" << endl; 
     cout << "repeat abc > abc.txt - sends text to a specified file, or echos words" << endl;
     cout << "himom - creates a child process using a fork. Where child and parent communicate." << endl; 
     cout << "quit - exit the shell" << endl; 
@@ -182,23 +181,24 @@ void hiMom(){
 
     }
 } 
-// void signalHandler(int signum){
-//     cout << "recieved " << signum << ", exiting shell" << endl;
-//     print(); 
-//     _exit(0);
-// }   
+void signalHandler(int signum){
+    cout << "recieved " << signum << ", exiting shell" << endl;
+    history.close();
+    print(); 
+    _exit(0);
+}   
 
-// void print(){
-//     ifstream infile("history.txt");
-//     if(!infile){
-//         cerr << "cannot open history file" << endl;
-//         return;
-//     }
+void print(){
+    ifstream infile("history.txt");
+    if(!infile){
+        cerr << "cannot open history file" << endl;
+        return;
+    }
 
-//     string line; 
-//     cout << "command history" << endl;
-//     while(getline(infile, line)){
-//         cout << line << endl;
-//     }
-//     infile.close();
-// }
+    string line; 
+    cout << "command history" << endl;
+    while(getline(infile, line)){
+        cout << line << endl;
+    }
+    infile.close();
+}
