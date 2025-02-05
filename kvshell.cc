@@ -25,7 +25,7 @@ void hiMom(); // forks a child process & communicates with parent
 void signalHandler(int signum); 
 void print(); // prints a history file once shell is exited. 
 
-int main(int argc, char *argv[]){
+int main(){
 
     // opens history file 
     history.open("history.txt", ios::app);
@@ -45,7 +45,9 @@ void loopShell(){
     while(true){
         cout << prompt;
         getline(cin, cmdLine);
-
+        if(!cmdLine.empty()){
+            history << cmdLine << endl;
+        }
         // parsing command 
         stringstream ss(cmdLine);
         ss >> cmd; 
@@ -181,7 +183,7 @@ void hiMom(){
     }
 } 
 void signalHandler(int signum){
-    cout << "recieved " << signum << " exiting shell" << endl;
+    cout << "recieved " << signum << ", exiting shell" << endl;
     print(); 
     exit(0);
 }   
@@ -189,7 +191,7 @@ void signalHandler(int signum){
 void print(){
     history.close();
     ifstream infile("history.txt");
-    if(infile){
+    if(!infile){
         cerr << "cannot open history file" << endl;
         return;
     }
