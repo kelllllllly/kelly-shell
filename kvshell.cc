@@ -132,14 +132,14 @@ void hiMom(){
 
     int pip[2];
     char instring[20];
-    const char* msg = "Hi mom!";
+    const char *msg = "Hi mom!";
 
     if (pipe(pip) == -1){
         cout << "pipe failed" << endl;
         exit(1); 
     }
     
-    pid_t pid = fork(); // creates child process 
+    int pid = fork(); // creates child process 
 
     if (pid < 0){
         cout << "fork failed" << endl;
