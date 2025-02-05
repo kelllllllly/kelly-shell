@@ -57,8 +57,8 @@ void loopShell(){
 
         // used to quit the shell 
         if (cmd == "quit"){
-            print();
             history.close();
+            print();
             cout << "quitting" << endl;
             break;
         }
@@ -186,7 +186,6 @@ void hiMom(){
 } 
 void signalHandler(int signum){
     cout << "recieved " << signum << ", exiting shell" << endl;
-    print(); 
     exit(0);
 }   
 
@@ -200,7 +199,9 @@ void print(){
 
     cout << "command history: " << endl;
     while(getline(infile, line)){
+         if(!line.empty()){
         cout << line << endl;
+    }
     }
     infile.close();
 }
