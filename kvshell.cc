@@ -1,3 +1,8 @@
+// KELLY VEINTIMILLA
+// CSCI 411 LAB 2 SIMPLE SHELl
+// This program erplicates a simple linux CLI with a variety of commands. simply run ./compile.sh and type help to get started.
+// current bug on hopper: have to type quit twice to exit program not sure why. runs fine on my own VM through virtualbox.
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -60,16 +65,16 @@ int main() {
         else if (cmd == "clr") { // clears screen
             system("clear"); // executed using system 
         }
-        else if (cmd == "environ") {
-            system("env");
+        else if (cmd == "environ") { // lists enviorment variables if "environ" is entered
+            system("env"); // executed using system 
         }
         else if (cmd == "chgd") {
-            if (chdir(parameters.c_str()) != 0) {
+            if (chdir(parameters.c_str()) != 0) { // changes the current directory to what was specified in parameters, will return 0 on sucess and -1 on fail 
                 cerr << "directory not found" << endl;
             }
         }
-        else if (cmd == "dir") { // executed using system 
-            system(("ls -l " + parameters).c_str());
+        else if (cmd == "dir") { // if dir is entered, directory conents are displayed
+            system(("ls -l " + parameters).c_str()); // executed using system 
         }
 
         else if (cmd == "help"){ // executes userManual function, which shows all available commands 
@@ -87,15 +92,15 @@ int main() {
     }
 
     // displays history when exiting loop
-    historyOut.close();
-    ifstream historyIn(historyFile);
-    if (historyIn.is_open()) {
-        cout << "command history" << endl;
+    historyOut.close(); // close file
+    ifstream historyIn(historyFile); // opens file for reading
+    if (historyIn.is_open()) { // checks if file is open 
+        cout << "command history" << endl; 
         string line;
-        while (getline(historyIn, line)) {
-            cout << line << endl;
+        while (getline(historyIn, line)) { // reads each line 
+            cout << line << endl; // prints each line
         }
-        historyIn.close();
+        historyIn.close(); // close file
     }
 
     return 0;
@@ -111,7 +116,7 @@ void signalHandler(int signum) {// handles when a user wants to exit the shell u
     }
 
     history.close();
-    exit(signum);
+    exit(signum); // exit the program 
 }
 
 void userManual(){ // user manual showing all available commands 
@@ -128,69 +133,71 @@ void userManual(){ // user manual showing all available commands
 }
 
 void repeat(const string &parameters){ // repeats a string or redirects to a file 
-    stringstream ss(parameters);
+    stringstream ss(parameters); // used to parse parameters 
     string word, fileName, stop; // word for the text that will be input, filename for the file its being redirected to, stop for implementation of ">"
     bool redirect = false; 
 
     while (ss >> stop){
-        if(stop == ">"){
+        if(stop == ">"){ // detects the redirection symbol 
             redirect = true; 
-            ss >> fileName;
+            ss >> fileName; // reads file name 
             break;
         }
             if(!word.empty()){
-                word += " ";
+                word += " "; // adds a space between words if empty 
     }
     word += stop; 
     }
-    if(redirect){
+
+    if(redirect){ // once ">" is read it will output to a file 
         if(fileName.empty()){
             cerr << "file not specified." << endl;
             return;
         }
 
-        ofstream outFile(fileName);
-        if(!outFile){
+        ofstream outFile(fileName); // open file 
+
+        if(!outFile){ // error checking 
             cerr << "can not open file: " << fileName << endl; 
             return; 
         }
-        outFile << word << endl;
+        outFile << word << endl; // write text to file 
         outFile.close(); 
         cout << "text was sent to " << fileName << endl;
     } else {
-        cout << word << endl; 
+        cout << word << endl; // "echoes" if text was not redirected 
     }
     }
 
-void hiMom(){
+void hiMom(){ // for IPC using pipes w parent and child 
 
-    int pip[2];
-    char instring[128];
-    const char *msg = "Hi mom!";
+    int pip[2]; 
+    char instring[128]; // buffer for storing message read from pipe 
+    const char *msg = "Hi mom!"; // message child wants to send to parent
 
-    if (pipe(pip) == -1){
-        cout << "pipe failed" << endl;
+    if (pipe(pip) == -1){ // attempt to create pipe, -1 is returned if failed 
+        cout << "pipe failed" << endl; 
         return; 
     }
     int pid = fork(); // creates child process 
 
-    if (pid < 0){
+    if (pid < 0){ // check if fork failed 
         cout << "fork failed" << endl;
         return; 
     }
 
     // child process
-    if(pid == 0){
+    if(pid == 0){ 
         close(pip[0]); // close read
         cout << "Child: sends message to parent" << endl; 
-        write(pip[1], msg, strlen(msg) + 1);
-        close(pip[1]);    
+        write(pip[1], msg, strlen(msg) + 1); // here write message to pipe 
+        close(pip[1]);    // close write 
     }
     else { // parent process
-        close(pip[1]);
-        read(pip[0], instring, sizeof(instring) - 1);
-        cout << "Parent: hey kid, got your message! " << instring << endl; 
-        close(pip[0]);
+        close(pip[1]); // close write 
+        read(pip[0], instring, sizeof(instring) - 1); // reads message from pipe into instring 
+        cout << "Parent: hey kid, got your message! " << instring << endl;  // if this prints parent got the message! yay 
+        close(pip[0]); // close read 
 
     }
 } 
