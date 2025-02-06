@@ -2,7 +2,10 @@
 // CSCI 411 LAB 2 SIMPLE SHELl
 // This program erplicates a simple linux CLI with a variety of commands. simply run ./compile.sh and type help to get started.
 // current bug on hopper: have to type quit twice to exit program not sure why. runs fine on my own VM through virtualbox.
-
+// was not able to upload my compile.sh to blackboard; you can create a file named "compile.sh" and paste this into it to run the program:
+// clear
+// g++ -o shell kvshell.cc
+// ./shell
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -24,10 +27,10 @@ void signalHandler(int signum);
 int main() {
     signal(SIGINT, signalHandler);  // handles crtl + c, also prints history if needed. 
 
-    string prompt = "k$ "; // My prompt
+    string prompt = "k$ "; // my prompt
     string cmdLine, cmd, parameters;
     
-    ofstream historyOut(historyFile, ios::app); // Open history file in append mode
+    ofstream historyOut(historyFile, ios::app); // open history file in append mode
     if (!historyOut.is_open()) {
         cerr << "cannot open history file." << endl;
         return 1;
@@ -37,7 +40,7 @@ int main() {
         cout << prompt;
         // read the entire input line from the user
         if (!getline(cin, cmdLine)) {
-            break;  // Exit on EOF or input error
+            break;  // exit on EOF or input error
         }
 
         if (cmdLine.empty()) {
